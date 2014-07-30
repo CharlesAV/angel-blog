@@ -3,6 +3,23 @@
 use App, View, Response;
 
 class BlogController extends \Angel\Core\AngelController {
+	
+	function index() {
+		// Query
+		$Blog = $this->data['model'] = App::make('Blog');
+		$objects = $Blog
+			->orderBy('created_at','desc');
+			
+		// Pagination
+		$paginator = $objects->paginate(5);
+		$this->data['blogs'] = $paginator->getCollection();
+		$appends = $_GET;
+		unset($appends['page']);
+		$this->data['links'] = $paginator->appends($appends)->links();
+			
+		// Return
+		return View::make('blog::index',$this->data);
+	}
 
 	public function show($slug,$id)
 	{
@@ -15,7 +32,7 @@ class BlogController extends \Angel\Core\AngelController {
 		$this->data['blog'] = $blog;
 		$this->data['time'] = strtotime($blog->created_at);
 
-		return View::make('blog::blog', $this->data);
+		return View::make('blog::show', $this->data);
 	}
 
 	/*public function show_language($language_uri = 'en', $url = 'home', $section = null)
@@ -58,13 +75,19 @@ class BlogController extends \Angel\Core\AngelController {
 		$carbon = \Carbon\Carbon::create($year,($month + 1),1,0,0,0);
 		$end = $carbon->toDateTimeString();
 		
-		// Blogs
+		// Query
 		$Blog = $this->data['model'] = App::make('Blog');
-		$this->data['blogs'] = $Blog
+		$objects = $Blog
 			->where('created_at','>',$start)
 			->where('created_at','<',$end)
-			->orderBy('created_at','desc')
-			->get();
+			->orderBy('created_at','desc');
+			
+		// Pagination
+		$paginator = $objects->paginate(5);
+		$this->data['blogs'] = $paginator->getCollection();
+		$appends = $_GET;
+		unset($appends['page']);
+		$this->data['links'] = $paginator->appends($appends)->links();
 			
 		// Return
 		return View::make('blog::archive',$this->data);

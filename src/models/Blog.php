@@ -121,7 +121,7 @@ class Blog extends LinkableModel {
 	}
 	
 	public function recent($count = 5) {
-		$blogs = $this->orderBy('created_at','asc')->limit(5)->get();
+		$blogs = $this->orderBy('created_at','desc')->limit(5)->get();
 		
 		return $blogs;
 	}

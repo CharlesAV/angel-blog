@@ -1,4 +1,5 @@
 <?php
+Route::get('blog','BlogController@index');
 Route::get('blog/{slug}/{id}','BlogController@show');
 Route::get('blog/archive/{year}/{month}','BlogController@archive');
 
