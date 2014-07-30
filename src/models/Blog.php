@@ -43,6 +43,10 @@ class Blog extends LinkableModel {
 				   	       ->orderBy('created_at', 'DESC')
 				   	       ->get();
 	}
+	public function comments()
+	{
+		return $this->hasMany(App::make('BlogComment'))->orderBy('created_at','desc');
+	}
 
 	// Handling relationships in controller CRUD methods
 	public function pre_hard_delete()

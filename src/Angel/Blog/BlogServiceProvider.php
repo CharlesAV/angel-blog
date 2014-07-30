@@ -23,7 +23,17 @@ class BlogServiceProvider extends ServiceProvider {
 		
 		include __DIR__ . '../../../routes.php';
 
-		foreach (Config::get('blog::bindings') as $name=>$class) {
+		$bindings = array(
+			// Models
+			'Blog'                => '\Angel\Blog\Blog',
+			'BlogComment'                => '\Angel\Blog\BlogComment',
+	
+			// Controllers
+			'BlogController' => '\Angel\Blog\BlogController',
+			'AdminBlogController' => '\Angel\Blog\AdminBlogController'
+		);
+		
+		foreach ($bindings as $name=>$class) {
 			$this->app->singleton($name, function() use ($class) {
 				return new $class;
 			});

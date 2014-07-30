@@ -17,6 +17,12 @@ class AdminBlogController extends AdminCrudController {
 		'slug',
 		'html'
 	);
+	
+	public function after_save($blog, &$changes = array())
+	{
+		$blog->plaintext = strip_tags($blog->html);
+		$blog->save();
+	}
 
 	public function edit($id)
 	{
