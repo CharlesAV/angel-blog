@@ -6,6 +6,7 @@ return array(
 		'Blog'                => '\Angel\Blog\Blog',
 
 		// Controllers
+		'BlogController' => '\Angel\Blog\BlogController',
 		'AdminBlogController' => '\Angel\Blog\AdminBlogController'
 	)
 );

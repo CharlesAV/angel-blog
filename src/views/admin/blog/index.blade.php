@@ -2,9 +2,6 @@
 
 @section('title', 'Blog')
 
-@section('js')
-@stop
-
 @section('content')
 	<div class="row pad">
 		<div class="col-sm-8 pad">
@@ -29,26 +26,40 @@
 	<div class="row text-center">
 		{{ $links }}
 	</div>
+	@if (Config::get('core::languages') && !$single_language)
+		{{ Form::open(array('url'=>admin_uri('blog/copy'), 'role'=>'form', 'class'=>'noSubmitOnEnter')) }}
+	@endif
+
 	<div class="row">
-		<div class="col-sm-5">
+		<div class="col-sm-9">
 			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th style="width:80px;"></th>
+						@if (Config::get('core::languages') && !$single_language)
+							<th style="width:60px;">Copy</th>
+						@endif
 						<th style="width:80px;">ID</th>
 						<th>Name</th>
+						<th>Title</th>
 					</tr>
 				</thead>
 				<tbody>
-				@foreach($blog as $blog)
+				@foreach ($blogs as $blog)
 					<tr{{ $blog->deleted_at ? ' class="deleted"' : '' }}>
 						<td>
-							<a href="{{ admin_url('blog/edit/' . $blog->id) }}" class="btn btn-xs btn-default">
+							<a href="{{ $blog->link_edit() }}" class="btn btn-xs btn-default">
 								<span class="glyphicon glyphicon-edit"></span>
 							</a>
+							@if (!$blog->deleted_at)
+								<a href="{{ $blog->link() }}" class="btn btn-xs btn-info" target="_blank">
+									<span class="glyphicon glyphicon-eye-open"></span>
+								</a>
+							@endif
 						</td>
 						<td>{{ $blog->id }}</td>
 						<td>{{ $blog->name }}</td>
+						<td>{{ $blog->title }}</td>
 					</tr>
 				@endforeach
 				</tbody>

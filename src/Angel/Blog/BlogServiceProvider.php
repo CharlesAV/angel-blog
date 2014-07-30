@@ -1,6 +1,7 @@
 <?php namespace Angel\Blog;
 
 use Illuminate\Support\ServiceProvider;
+use Config;
 
 class BlogServiceProvider extends ServiceProvider {
 

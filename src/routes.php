@@ -1,13 +1,14 @@
 <?php
+Route::get('blog/{slug}/{id}','BlogController@show');
+Route::get('blog/archive/{year}/{month}','BlogController@archive');
+
 Route::group(array('prefix'=>admin_uri('blog'), 'before'=>'admin'), function() {
 
 	$controller = 'AdminBlogController';
 
-	Route::get('/', function() {
-		return "test";		
-	}/*array(
+	Route::get('/', array(
 		'uses' => $controller . '@index'
-	)*/);
+	));
 	Route::get('add', array(
 		'uses' => $controller . '@add'
 	));
