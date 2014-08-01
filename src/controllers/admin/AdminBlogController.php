@@ -1,7 +1,7 @@
 <?php namespace Angel\Blog;
 
 use Angel\Core\AdminCrudController;
-use App, Input, Config, View, Validator, Redirect;
+use App, Input, View, Validator;
 
 class AdminBlogController extends AdminCrudController {
 

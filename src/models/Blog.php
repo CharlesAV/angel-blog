@@ -1,7 +1,7 @@
 <?php namespace Angel\Blog;
 
 use Angel\Core\LinkableModel;
-use View, App, Config;;
+use App, Config;
 
 class Blog extends LinkableModel {
 
