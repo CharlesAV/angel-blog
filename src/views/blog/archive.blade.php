@@ -12,12 +12,12 @@
 	<div class="row">
 		<div class="col-md-9">
 			<h1 class="blog-archive-heading">{{ $month_string }} {{ $year }}</h1>
-			@foreach($blogs as $blog) 
+			@foreach($items as $item) 
 			<div class="blog-archive-item">
-				<h2 class="blog-name"><a href="{{ $blog->link() }}">{{ $blog->name }}</a></h2>
-				<div class="blog-date">Posted {{ date('F j, Y',strtotime($blog->created_at)) }} at {{ date('g:i A',strtotime($blog->created_at)) }}</div>
+				<h2 class="blog-name"><a href="{{ $item->link() }}">{{ $item->name }}</a></h2>
+				<div class="blog-date">Posted {{ date('F j, Y',strtotime($item->created_at)) }} at {{ date('g:i A',strtotime($item->created_at)) }}</div>
 				<div class="blog-html">
-					{{ $blog->html }}
+					{{ $item->html }}
 				</div>
 			</div>
 			@endforeach
@@ -27,12 +27,7 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="blog-recent">
-				{{ View::make('blog::sidebar.recent',array('blog' => $model)) }}
-			</div>
-			<div class="blog-archive">
-				{{ View::make('blog::sidebar.archive',array('blog' => $model)) }}
-			</div>
+			{{ View::make('blog::blog.sidebar',array('model' => $model)) }}
 		</div>
 	</div>
 @stop

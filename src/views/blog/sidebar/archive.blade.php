@@ -1,5 +1,5 @@
 <h2>Archive</h2>
-@if($array = $blog->archive())
+@if($array = $model->archive())
 	<ul>
 	@foreach($array as $v)
 		<li><a href="{{ $v['url'] }}">{{ $v['month'] }} {{ $v['year'] }} ({{ $v['count'] }})</a></li>

@@ -24,7 +24,6 @@ class CreateBlogsCommentsTable extends Migration {
 			$table->text('text');
 			$table->timestamps(); // Adds `created_at` and `updated_at` columns
 			$table->softDeletes(); // Adds `deleted_at` column
-			
 			$table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
 			$table->foreign('user_id')->references('id')->on('users');
 		});

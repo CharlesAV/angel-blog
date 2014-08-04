@@ -1,11 +1,11 @@
 <?php namespace Angel\Blog;
 
 use Angel\Core\AdminCrudController;
-use App, Input, View, Validator;
+use App, Input, View, Validator, Config;
 
 class AdminBlogController extends AdminCrudController {
-
-	protected $Model	= 'Blog';
+	protected $package = 'blog';
+	/*protected $Model	= 'Blog';
 	protected $uri		= 'blog';
 	protected $plural	= 'blogs';
 	protected $singular	= 'blog';
@@ -16,35 +16,46 @@ class AdminBlogController extends AdminCrudController {
 		'name',
 		'slug',
 		'html'
-	);
+	);*/
 	
-	public function after_save($blog, &$changes = array())
+	public function __construct() {
+		// To work with AdminCrudController
+		foreach(Config::get($this->package.'::config') as $k => $v) {
+			$this->$k = $v;
+			$this->data[$k] = $v; // Isn't part of AdminCrudController needs, just like having it in blade template
+		}
+		$this->plural = 'items';   
+		$this->singular = 'item';
+		
+		// Parent
+		parent::__construct();
+	}
+	
+	public function after_save($item, &$changes = array())
 	{
-		$blog->plaintext = strip_tags($blog->html);
-		$blog->save();
+		$item->plaintext = strip_tags($item->html);
+		$item->save();
 	}
 
 	public function edit($id)
 	{
-		$Blog = App::make('Blog');
+		$model = App::make($this->Model);
 
-		$blog = $Blog::withTrashed()->find($id);
-		$this->data['blog'] = $blog;
-		$this->data['changes'] = $blog->changes();
+		$item = $model::withTrashed()->find($id);
+		$this->data['item'] = $item;
+		$this->data['changes'] = $item->changes();
 		$this->data['action'] = 'edit';
 
-		return View::make($this->package . '::admin.blog.add-or-edit', $this->data);
+		return View::make($this->package . '::admin.'.$this->code.'.add-or-edit', $this->data);
 	}
-	
-	
 
 	/**
-	 * Validate all input when adding or editing a blog entry.
+	 * Validate all input when adding or editing a item.
 	 *
 	 * @param array &$custom - This array is initialized by this function.  Its purpose is to
 	 * 							exclude certain columns that require intervention of some kind (such as
 	 * 							checkboxes because they aren't included in input on submission)
-	 * @param int $id - (Optional) ID of blog entry beind edited
+	 * @param int $id - (Optional) ID of item beind edited
 	 * @return array - An array of error messages to show why validation failed
 	 */
 	public function validate(&$custom, $id = null)

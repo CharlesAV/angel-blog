@@ -45,23 +45,31 @@
 					</tr>
 				</thead>
 				<tbody>
-				@foreach ($blogs as $blog)
-					<tr{{ $blog->deleted_at ? ' class="deleted"' : '' }}>
+				@if(count($items))
+					@foreach ($items as $item)
+					<tr{{ $item->deleted_at ? ' class="deleted"' : '' }}>
 						<td>
-							<a href="{{ $blog->link_edit() }}" class="btn btn-xs btn-default">
+							<a href="{{ $item->link_edit() }}" class="btn btn-xs btn-default">
 								<span class="glyphicon glyphicon-edit"></span>
 							</a>
-							@if (!$blog->deleted_at)
-								<a href="{{ $blog->link() }}" class="btn btn-xs btn-info" target="_blank">
+							@if (!$item->deleted_at)
+								<a href="{{ $item->link() }}" class="btn btn-xs btn-info" target="_blank">
 									<span class="glyphicon glyphicon-eye-open"></span>
 								</a>
 							@endif
 						</td>
-						<td>{{ $blog->id }}</td>
-						<td>{{ $blog->name }}</td>
-						<td>{{ $blog->title }}</td>
+						<td>{{ $item->id }}</td>
+						<td>{{ $item->name }}</td>
+						<td>{{ $item->title }}</td>
 					</tr>
-				@endforeach
+					@endforeach
+				@else 
+					<tr>
+						<td colspan="4" align="center">
+							No {{ Config::get($package."::plural") }} Found.
+						</td>
+					</tr>
+				@endif
 				</tbody>
 			</table>
 		</div>

@@ -1,67 +1,52 @@
 <?php namespace Angel\Blog;
 
-use App, View, Response;
+use App, View, Response, Config;
 
 class BlogController extends \Angel\Core\AngelController {
+	protected $package = 'blog';
+	public function __construct() {
+		// Config
+		foreach(Config::get($this->package.'::config') as $k => $v) {
+			$this->$k = $this->data[$k] = $v;
+		}
+		
+		// Model
+		$this->model = $this->data['model'] = App::make($this->Model);
+		
+		// Parent
+		parent::__construct();
+	}
 	
 	function index() {
 		// Query
-		$Blog = $this->data['model'] = App::make('Blog');
-		$objects = $Blog
+		$objects = $this->model
 			->orderBy('created_at','desc');
 			
 		// Pagination
 		$paginator = $objects->paginate(5);
-		$this->data['blogs'] = $paginator->getCollection();
+		$this->data['items'] = $paginator->getCollection();
 		$appends = $_GET;
 		unset($appends['page']);
 		$this->data['links'] = $paginator->appends($appends)->links();
 			
 		// Return
-		return View::make('blog::index',$this->data);
+		return View::make($this->package.'::'.$this->code.'.index',$this->data);
 	}
 
 	public function show($slug,$id)
 	{
-		$Blog = App::make('Blog');
-
-		$blog = $Blog::find($id);
-
-		if (!$blog || !$blog->is_published()) App::abort(404);
-
-		$this->data['blog'] = $blog;
-		$this->data['time'] = strtotime($blog->created_at);
-
-		return View::make('blog::show', $this->data);
+		// Item
+		$item = $this->model->find($id);
+		if (!$item || !$item->is_published()) App::abort(404);
+		$this->data['item'] = $item;
+		$this->data['time'] = strtotime($item->created_at);
+		
+		// Comments
+		$this->data['comments'] = $this->model->comments();
+		
+		// Return
+		return View::make('blog::blog.show', $this->data);
 	}
-
-	/*public function show_language($language_uri = 'en', $url = 'home', $section = null)
-	{
-		$Page = App::make('Page');
-
-		$language = $this->languages->filter(function ($language) use ($language_uri) {
-			return ($language->uri == $language_uri);
-		})->first();
-
-		if (!$language) App::abort(404);
-
-		$page = $Page::with('modules')
-						  ->where('language_id', $language->id)
-			              ->where('url', $url)
-					      ->first();
-
-		if (!$page || !$page->is_published()) App::abort(404);
-
-		$this->data['active_language']  = $language;
-		$this->data['page']				= $page;
-
-		$method = str_replace('-', '_', $url);
-		if (method_exists($this, $method)) {
-			return $this->$method($section);
-		}
-
-		return View::make('core::page', $this->data);
-	}*/
 	
 	function archive($year,$month) {
 		// Year / month
@@ -76,20 +61,19 @@ class BlogController extends \Angel\Core\AngelController {
 		$end = $carbon->toDateTimeString();
 		
 		// Query
-		$Blog = $this->data['model'] = App::make('Blog');
-		$objects = $Blog
+		$objects = $this->model
 			->where('created_at','>',$start)
 			->where('created_at','<',$end)
 			->orderBy('created_at','desc');
 			
 		// Pagination
 		$paginator = $objects->paginate(5);
-		$this->data['blogs'] = $paginator->getCollection();
+		$this->data['items'] = $paginator->getCollection();
 		$appends = $_GET;
 		unset($appends['page']);
 		$this->data['links'] = $paginator->appends($appends)->links();
 			
 		// Return
-		return View::make('blog::archive',$this->data);
+		return View::make('blog::blog.archive',$this->data);
 	}
 }
