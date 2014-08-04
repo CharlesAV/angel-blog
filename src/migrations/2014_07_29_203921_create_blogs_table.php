@@ -14,7 +14,8 @@ class CreateBlogsTable extends Migration {
 	{
 		Schema::create('blogs', function(Blueprint $table)
 		{
-			$table->engine = 'MyISAM';
+			$table->engine = 'InnoDB';
+
 			$table->increments('id');
 			$table->string('name');
 			$table->string('slug');
@@ -39,8 +40,10 @@ class CreateBlogsTable extends Migration {
 				$table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
 			}
 		});
-		
-		DB::statement('ALTER TABLE `blogs` ADD FULLTEXT search(`name`, `plaintext`, `meta_description`, `meta_keywords`)');
+
+		if (\ToolBelt::mysql_greater(5, 6, 4)) {
+			DB::statement('ALTER TABLE `blogs` ADD FULLTEXT search(`name`, `plaintext`, `meta_description`, `meta_keywords`)');
+		}
 	}
 
 	/**
