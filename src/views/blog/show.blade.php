@@ -14,7 +14,6 @@
 			<div class="blog-html">
 				{{ $item->html }}
 			</div>
-			
 			<div class="blog-comments">
 				{{ View::make('blog::blog.comments.index',array('item' => $item,'model' => $model,'comments' => $comments)) }}
 			</div>

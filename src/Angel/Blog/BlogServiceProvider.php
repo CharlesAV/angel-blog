@@ -30,7 +30,8 @@ class BlogServiceProvider extends ServiceProvider {
 	
 			// Controllers
 			'BlogController' => '\Angel\Blog\BlogController',
-			'AdminBlogController' => '\Angel\Blog\AdminBlogController'
+			'AdminBlogController' => '\Angel\Blog\AdminBlogController',
+			'AdminBlogCommentController' => '\Angel\Blog\AdminBlogCommentController'
 		);
 		
 		foreach ($bindings as $name=>$class) {

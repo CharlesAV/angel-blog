@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use \ToolBelt;
 
 class CreateBlogsTable extends Migration {
 

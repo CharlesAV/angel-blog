@@ -42,7 +42,7 @@ class BlogController extends \Angel\Core\AngelController {
 		$this->data['time'] = strtotime($item->created_at);
 		
 		// Comments
-		$this->data['comments'] = $this->model->comments();
+		$this->data['comments'] = $item->comments();
 		
 		// Return
 		return View::make('blog::blog.show', $this->data);

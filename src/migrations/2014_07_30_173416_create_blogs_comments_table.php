@@ -17,10 +17,10 @@ class CreateBlogsCommentsTable extends Migration {
 			$table->engine = 'InnoDB';
 
 			$table->increments('id');
-			$table->integer('blog_id')->unsigned()->nullable();
+			$table->integer('blog_id')->unsigned();
 			$table->integer('user_id')->unsigned()->nullable();
-			$table->string('user_name');
-			$table->string('user_email');
+			$table->string('user_name')->nullable();
+			$table->string('user_email')->nullable();
 			$table->text('text');
 			$table->timestamps(); // Adds `created_at` and `updated_at` columns
 			$table->softDeletes(); // Adds `deleted_at` column
