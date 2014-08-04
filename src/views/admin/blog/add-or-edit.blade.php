@@ -41,25 +41,25 @@
 @section('content')
 	<h1>{{ ucfirst($action) }} Blog Entry</h1>
 	@if ($action == 'edit')
-		@if (!$blog->deleted_at)
+		@if (!$item->deleted_at)
 			{{ Form::open(array('role'=>'form',
-								'url'=>admin_uri('blog/delete/'.$blog->id),
+								'url'=>admin_uri('blog/delete/'.$item->id),
 								'style'=>'margin-bottom:15px;')) }}
 				<input type="submit" class="btn btn-sm btn-danger" value="Delete" />
 			{{ Form::close() }}
 		@else
 			{{ Form::open(array('role'=>'form',
-								'url'=>admin_uri('blog/hard-delete/'.$blog->id),
+								'url'=>admin_uri('blog/hard-delete/'.$item->id),
 								'class'=>'deleteForm',
 								'data-confirm'=>'Delete this blog entry forever?  This action cannot be undone!')) }}
 				<input type="submit" class="btn btn-sm btn-danger" value="Delete Forever" />
 			{{ Form::close() }}
-			<a href="{{ admin_url('blog/restore/'.$blog->id) }}" class="btn btn-sm btn-success">Restore</a>
+			<a href="{{ admin_url('blog/restore/'.$item->id) }}" class="btn btn-sm btn-success">Restore</a>
 		@endif
 	@endif
 
 	@if ($action == 'edit')
-		{{ Form::model($blog) }}
+		{{ Form::model($item) }}
 	@elseif ($action == 'add')
 		{{ Form::open(array('role'=>'form', 'method'=>'post')) }}
 	@endif

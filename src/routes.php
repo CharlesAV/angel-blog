@@ -1,7 +1,7 @@
 <?php
 Route::get('blog','BlogController@index');
 Route::get('blog/{slug}/{id}','BlogController@show');
-Route::get('blog/archive/{year}/{month}','BlogController@archive');
+Route::get('blog/archive/{year}/{month}','BlogController@archive');  
 
 Route::group(array('prefix'=>admin_uri('blog'), 'before'=>'admin'), function() {
 
@@ -37,3 +37,6 @@ Route::group(array('prefix'=>admin_uri('blog'), 'before'=>'admin'), function() {
 		'uses' => $controller . '@restore'
 	));
 });
+
+// Comments
+Route::post('blog/comments','BlogCommentController@store');
