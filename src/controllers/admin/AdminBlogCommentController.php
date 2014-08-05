@@ -6,6 +6,17 @@ use App, Redirect;
 class AdminBlogCommentController extends AdminCrudController {
 	protected $package = 'blog';
 	protected $Model = 'BlogComment';
+
+	// Columns to update on edit/add
+	protected static function columns() {
+		return array(
+			'blog_id',
+			'user_id',
+			'user_name',
+			'user_email',
+			'text'
+		);
+	}
 	
 	public function store(){
 		return parent::attempt_add();	
