@@ -45,22 +45,22 @@
 					</tr>
 				</thead>
 				<tbody>
-				@if(count($items))
-					@foreach ($items as $item)
-					<tr{{ $item->deleted_at ? ' class="deleted"' : '' }}>
+				@if(count($blog_entries))
+					@foreach ($blog_entries as $blog_entry)
+					<tr{{ $blog_entry->deleted_at ? ' class="deleted"' : '' }}>
 						<td>
-							<a href="{{ $item->link_edit() }}" class="btn btn-xs btn-default">
+							<a href="{{ $blog_entry->link_edit() }}" class="btn btn-xs btn-default">
 								<span class="glyphicon glyphicon-edit"></span>
 							</a>
-							@if (!$item->deleted_at)
-								<a href="{{ $item->link() }}" class="btn btn-xs btn-info" target="_blank">
+							@if (!$blog_entry->deleted_at)
+								<a href="{{ $blog_entry->link() }}" class="btn btn-xs btn-info" target="_blank">
 									<span class="glyphicon glyphicon-eye-open"></span>
 								</a>
 							@endif
 						</td>
-						<td>{{ $item->id }}</td>
-						<td>{{ $item->name }}</td>
-						<td>{{ $item->title }}</td>
+						<td>{{ $blog_entry->id }}</td>
+						<td>{{ $blog_entry->name }}</td>
+						<td>{{ $blog_entry->title }}</td>
 					</tr>
 					@endforeach
 				@else 

@@ -11,7 +11,7 @@ class BlogController extends \Angel\Core\AngelController {
 		}
 		
 		// Model
-		$this->model = $this->data['model'] = App::make($this->Model);
+		$this->Blog = $this->data['Blog'] = App::make('Blog');
 		
 		// Parent
 		parent::__construct();
@@ -19,30 +19,30 @@ class BlogController extends \Angel\Core\AngelController {
 	
 	function index() {
 		// Query
-		$objects = $this->model
+		$objects = $this->Blog
 			->orderBy('created_at','desc');
 			
 		// Pagination
 		$paginator = $objects->paginate(5);
-		$this->data['items'] = $paginator->getCollection();
+		$this->data['blog_entries'] = $paginator->getCollection();
 		$appends = $_GET;
 		unset($appends['page']);
 		$this->data['links'] = $paginator->appends($appends)->links();
 			
 		// Return
-		return View::make($this->package.'::'.$this->code.'.index',$this->data);
+		return View::make($this->package.'::blog.index',$this->data);
 	}
 
 	public function show($slug,$id)
 	{
 		// Item
-		$item = $this->model->find($id);
-		if (!$item || !$item->is_published()) App::abort(404);
-		$this->data['item'] = $item;
-		$this->data['time'] = strtotime($item->created_at);
+		$blog_entry = $this->Blog->find($id);
+		if (!$blog_entry || !$blog_entry->is_published()) App::abort(404);
+		$this->data['blog_entry'] = $blog_entry;
+		$this->data['time'] = strtotime($blog_entry->created_at);
 		
 		// Comments
-		$this->data['comments'] = $item->comments();
+		$this->data['comments'] = $blog_entry->comments();
 		
 		// Return
 		return View::make('blog::blog.show', $this->data);
@@ -61,14 +61,14 @@ class BlogController extends \Angel\Core\AngelController {
 		$end = $carbon->toDateTimeString();
 		
 		// Query
-		$objects = $this->model
+		$objects = $this->Blog
 			->where('created_at','>',$start)
 			->where('created_at','<',$end)
 			->orderBy('created_at','desc');
 			
 		// Pagination
 		$paginator = $objects->paginate(5);
-		$this->data['items'] = $paginator->getCollection();
+		$this->data['blog_entries'] = $paginator->getCollection();
 		$appends = $_GET;
 		unset($appends['page']);
 		$this->data['links'] = $paginator->appends($appends)->links();

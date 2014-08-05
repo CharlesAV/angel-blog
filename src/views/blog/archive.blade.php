@@ -5,19 +5,19 @@
 @stop
 
 @section('meta')
-	{{ $model->meta_html() }}
+	{{ $Blog->meta_html() }}
 @stop
 
 @section('content')
 	<div class="row">
 		<div class="col-md-9">
 			<h1 class="blog-archive-heading">{{ $month_string }} {{ $year }}</h1>
-			@foreach($items as $item) 
-			<div class="blog-archive-item">
-				<h2 class="blog-name"><a href="{{ $item->link() }}">{{ $item->name }}</a></h2>
-				<div class="blog-date">Posted {{ date('F j, Y',strtotime($item->created_at)) }} at {{ date('g:i A',strtotime($item->created_at)) }}</div>
+			@foreach($blog_entries as $blog_entry) 
+			<div class="blog-archive-blog_entry">
+				<h2 class="blog-name"><a href="{{ $blog_entry->link() }}">{{ $blog_entry->name }}</a></h2>
+				<div class="blog-date">Posted {{ date('F j, Y',strtotime($blog_entry->created_at)) }} at {{ date('g:i A',strtotime($blog_entry->created_at)) }}</div>
 				<div class="blog-html">
-					{{ $item->html }}
+					{{ $blog_entry->html }}
 				</div>
 			</div>
 			@endforeach
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			{{ View::make('blog::blog.sidebar',array('model' => $model)) }}
+			{{ View::make('blog::blog.sidebar',array('Blog' => $Blog)) }}
 		</div>
 	</div>
 @stop

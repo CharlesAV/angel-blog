@@ -1,7 +1,7 @@
 <h2>Comments ({{ $comments->count() }})</h2>
 
 {{ Form::open(array('role' => 'form', 'url' => url('blog/comments'), 'method'=>'post')) }}
-{{ Form::hidden('blog_id',$item->id); }}
+{{ Form::hidden('blog_id',$blog_entry->id); }}
 
 <div class="blog-comments-form">
 	@if(!Auth::check())
@@ -27,7 +27,7 @@
 @if($comments->count()) 
 <table class="table table-striped table-bordered">
 	@foreach($comments->get() as $comment)
-		{{ View::make('blog::blog.comments.show',array('item' => $comment)) }}
+		{{ View::make('blog::blog.comments.show',array('comment' => $comment)) }}
 	@endforeach
 </table>
 @else 

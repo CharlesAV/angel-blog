@@ -125,16 +125,16 @@ class Blog extends LinkableModel {
 	}
 	
 	public function recent($count = 5) {
-		$items = $this->orderBy('created_at','desc')->limit(5)->get();
+		$blog_entries = $this->orderBy('created_at','desc')->limit(5)->get();
 		
-		return $items;
+		return $blog_entries;
 	}
 	
 	public function archive() {
 		$array = array();
-		$items = $this->orderBy('id','desc')->get();
-		foreach($items as $item) {
-			$time = strtotime($item->created_at);
+		$blog_entries = $this->orderBy('id','desc')->get();
+		foreach($blog_entries as $blog_entry) {
+			$time = strtotime($blog_entry->created_at);
 			$year = date('Y',$time);
 			$month = date('m',$time);
 			$key = $year.$month;
