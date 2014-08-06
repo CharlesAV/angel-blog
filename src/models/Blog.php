@@ -99,13 +99,15 @@ class Blog extends LinkableModel {
 		return true;
 	}
 	
-	public function recent($count = 5) {
-		$blog_entries = $this->orderBy('created_at','desc')->limit(5)->get();
+	public function recent($count = 5)
+	{
+		$blog_entries = $this->orderBy('created_at','desc')->limit($count)->get();
 		
 		return $blog_entries;
 	}
 	
-	public function archive() {
+	public function archive()
+	{
 		$array = array();
 		$blog_entries = $this->orderBy('id','desc')->get();
 		foreach($blog_entries as $blog_entry) {
