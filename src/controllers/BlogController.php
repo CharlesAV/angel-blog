@@ -1,23 +1,18 @@
 <?php namespace Angel\Blog;
 
-use App, View, Response, Config;
+use App, View;
 
 class BlogController extends \Angel\Core\AngelController {
-	protected $package = 'blog';
-	public function __construct() {
-		// Config
-		foreach(Config::get($this->package.'::config') as $k => $v) {
-			$this->$k = $this->data[$k] = $v;
-		}
-		
-		// Model
+	
+	public function __construct()
+	{
 		$this->Blog = $this->data['Blog'] = App::make('Blog');
-		
-		// Parent
+
 		parent::__construct();
 	}
 	
-	function index() {
+	function index()
+	{
 		// Query
 		$objects = $this->Blog
 			->orderBy('created_at','desc');
@@ -30,25 +25,23 @@ class BlogController extends \Angel\Core\AngelController {
 		$this->data['links'] = $paginator->appends($appends)->links();
 			
 		// Return
-		return View::make($this->package.'::blog.index',$this->data);
+		return View::make('blog::blog.index',$this->data);
 	}
 
-	public function show($slug,$id)
+	public function show($slug)
 	{
 		// Item
-		$blog_entry = $this->Blog->find($id);
+		$blog_entry = $this->Blog->with('comments')->where('slug', $slug)->first();
 		if (!$blog_entry || !$blog_entry->is_published()) App::abort(404);
 		$this->data['blog_entry'] = $blog_entry;
 		$this->data['time'] = strtotime($blog_entry->created_at);
-		
-		// Comments
-		$this->data['comments'] = $blog_entry->comments();
 		
 		// Return
 		return View::make('blog::blog.show', $this->data);
 	}
 	
-	function archive($year,$month) {
+	function archive($year,$month)
+	{
 		// Year / month
 		$this->data['year'] = $year;
 		$this->data['month'] = $month;

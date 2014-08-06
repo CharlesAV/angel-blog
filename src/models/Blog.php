@@ -45,7 +45,7 @@ class Blog extends LinkableModel {
 	{
 		$language_segment = (Config::get('core::languages')) ? $this->language->uri . '/' : '';
 
-		return url($language_segment . 'blog/' . $this->slug . '/' . $this->id);
+		return url($language_segment . 'blog/' . $this->slug);
 	}
 	public function link_edit()
 	{
