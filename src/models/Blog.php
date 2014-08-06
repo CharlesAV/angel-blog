@@ -5,8 +5,6 @@ use App, Config;
 
 class Blog extends LinkableModel {
 
-	protected $softDelete = true;
-
 	///////////////////////////////////////////////
 	//               Relationships               //
 	///////////////////////////////////////////////
