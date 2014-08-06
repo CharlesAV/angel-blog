@@ -1,6 +1,6 @@
 <h2>Comments ({{ $blog_entry->comments->count() }})</h2>
 
-{{ Form::open(array('role' => 'form', 'url' => url('blog/comments'), 'method'=>'post')) }}
+{{ Form::open(array('role' => 'form', 'url' => url('blog/comments'))) }}
 	{{ Form::hidden('blog_id',$blog_entry->id); }}
 
 	<div class="blog-comments-form">
