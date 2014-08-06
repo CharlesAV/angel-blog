@@ -24,9 +24,9 @@ class Blog extends LinkableModel {
 	}
 
 	// Handling relationships in controller CRUD methods
-	public function pre_hard_delete()
+	public function pre_delete()
 	{
-		parent::pre_hard_delete();
+		parent::pre_delete();
 		$Change = App::make('Change');
 		$Change::where('fmodel', 'Blog')
 			        ->where('fid', $this->id)
