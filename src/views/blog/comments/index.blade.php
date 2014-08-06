@@ -25,7 +25,7 @@
 <br />
 @if($blog_entry->comments->count())
 	<table class="table table-striped table-bordered">
-		@foreach($blog_entry->comments->get() as $comment)
+		@foreach($blog_entry->comments as $comment)
 			@include('blog::blog.comments.show')
 		@endforeach
 	</table>

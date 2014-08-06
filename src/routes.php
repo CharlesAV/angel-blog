@@ -13,7 +13,7 @@ Route::group(array('prefix' => 'blog'), function() {
 	));
 });
 
-Route::group(array('prefix'=>admin_uri('blog'), 'before'=>'admin'), function() {
+Route::group(array('prefix' => admin_uri('blog'), 'before' => 'admin'), function() {
 
 	$controller = 'AdminBlogController';
 
