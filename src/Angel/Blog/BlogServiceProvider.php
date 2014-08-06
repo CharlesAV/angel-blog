@@ -1,7 +1,6 @@
 <?php namespace Angel\Blog;
 
 use Illuminate\Support\ServiceProvider;
-use Config;
 
 class BlogServiceProvider extends ServiceProvider {
 
@@ -25,12 +24,12 @@ class BlogServiceProvider extends ServiceProvider {
 
 		$bindings = array(
 			// Models
-			'Blog'                => '\Angel\Blog\Blog',
-			'BlogComment'                => '\Angel\Blog\BlogComment',
+			'Blog'        => '\Angel\Blog\Blog',
+			'BlogComment' => '\Angel\Blog\BlogComment',
 	
 			// Controllers
-			'BlogController' => '\Angel\Blog\BlogController',
-			'AdminBlogController' => '\Angel\Blog\AdminBlogController',
+			'BlogController'             => '\Angel\Blog\BlogController',
+			'AdminBlogController'        => '\Angel\Blog\AdminBlogController',
 			'AdminBlogCommentController' => '\Angel\Blog\AdminBlogCommentController'
 		);
 		
