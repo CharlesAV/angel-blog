@@ -11,7 +11,7 @@
 			{{ date('F j, Y g:i A',strtotime($comment->created_at)) }}
 		</div>
 		<div class="blog-comment-text">
-			{{ nl2br($comment->text) }}
+			{{ nl2br(strip_tags($comment->text)) }}
 		</div>
 	</td>
 </tr>
