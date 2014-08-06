@@ -2,7 +2,7 @@
 	<td>
 		<div class="blog-comment-user">
 		@if($comment->user_id) 
-			{{ $comment->user->first_name." ".$comment->user->last_name }}
+			{{ $comment->user->full_name() }}
 		@else
 			{{ $comment->user_name }}
 		@endif
