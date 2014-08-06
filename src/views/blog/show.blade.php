@@ -15,11 +15,11 @@
 				{{ $blog_entry->html }}
 			</div>
 			<div class="blog-comments">
-				{{ View::make('blog::blog.comments.index',array('blog_entry' => $blog_entry,'Blog' => $Blog,'comments' => $comments)) }}
+				@include('blog::blog.comments.index')
 			</div>
 		</div>
 		<div class="col-md-3">
-			{{ View::make('blog::blog.sidebar',array('Blog' => $Blog)) }}
+			@include('blog::blog.sidebar')
 		</div>
 	</div>
 @stop

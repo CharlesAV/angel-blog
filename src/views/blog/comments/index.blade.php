@@ -27,7 +27,7 @@
 @if($comments->count()) 
 <table class="table table-striped table-bordered">
 	@foreach($comments->get() as $comment)
-		{{ View::make('blog::blog.comments.show',array('comment' => $comment)) }}
+		@include('blog::blog.comments.show')
 	@endforeach
 </table>
 @else 

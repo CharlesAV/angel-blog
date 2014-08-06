@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			{{ View::make('blog::blog.sidebar',array('Blog' => $Blog)) }}
+			@include('blog::blog.sidebar')
 		</div>
 	</div>
 @stop

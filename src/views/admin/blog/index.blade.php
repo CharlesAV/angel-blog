@@ -66,7 +66,7 @@
 				@else 
 					<tr>
 						<td colspan="4" align="center">
-							No {{ Config::get($package."::plural") }} Found.
+							No Blogs Found.
 						</td>
 					</tr>
 				@endif
