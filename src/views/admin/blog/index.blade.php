@@ -47,19 +47,19 @@
 				<tbody>
 				@if(count($blog_entries))
 					@foreach ($blog_entries as $blog_entry)
-					<tr>
-						<td>
-							<a href="{{ $blog_entry->link_edit() }}" class="btn btn-xs btn-default">
-								<span class="glyphicon glyphicon-edit"></span>
-							</a>
-							<a href="{{ $blog_entry->link() }}" class="btn btn-xs btn-info" target="_blank">
-								<span class="glyphicon glyphicon-eye-open"></span>
-							</a>
-						</td>
-						<td>{{ $blog_entry->id }}</td>
-						<td>{{ $blog_entry->name }}</td>
-						<td>{{ $blog_entry->title }}</td>
-					</tr>
+						<tr>
+							<td>
+								<a href="{{ $blog_entry->link_edit() }}" class="btn btn-xs btn-default">
+									<span class="glyphicon glyphicon-edit"></span>
+								</a>
+								<a href="{{ $blog_entry->link() }}" class="btn btn-xs btn-info" target="_blank">
+									<span class="glyphicon glyphicon-eye-open"></span>
+								</a>
+							</td>
+							<td>{{ $blog_entry->id }}</td>
+							<td>{{ $blog_entry->name }}</td>
+							<td>{{ $blog_entry->title }}</td>
+						</tr>
 					@endforeach
 				@else 
 					<tr>
