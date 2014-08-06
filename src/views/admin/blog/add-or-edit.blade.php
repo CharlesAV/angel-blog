@@ -4,16 +4,6 @@
 
 @section('css')
 	{{ HTML::style('packages/angel/core/js/jquery/jquery.datetimepicker.css') }}
-	<style>
-		textarea {
-			resize:vertical;
-			width:100%;
-		}
-
-		.module {
-			padding-top:10px;
-		}
-	</style>
 @stop
 
 @section('js')
@@ -59,9 +49,9 @@
 	@endif
 
 	@if ($action == 'edit')
-		{{ Form::model($blog_entry) }}
+		{{ Form::model($blog_entry, array('role'=>'form')) }}
 	@elseif ($action == 'add')
-		{{ Form::open(array('role'=>'form', 'method'=>'post')) }}
+		{{ Form::open(array('role'=>'form')) }}
 	@endif
 
 	@if (isset($menu_id))
