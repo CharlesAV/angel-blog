@@ -87,11 +87,12 @@
 					</tr>
 					<tr>
 						<td>
+							<span class="required">*</span>
 							{{ Form::label('slug', 'Slug') }}
 						</td>
 						<td>
 							<div style="width:300px">
-								{{ Form::text('slug', null, array('class'=>'form-control', 'placeholder'=>'Slug')) }}
+								{{ Form::text('slug', null, array('class'=>'form-control', 'placeholder'=>'Slug', 'required')) }}
 							</div>
 						</td>
 					</tr>
