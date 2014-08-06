@@ -72,7 +72,7 @@ class AdminBlogController extends AdminCrudController {
 		$errors = array();
 		$rules = array(
 			'name' => 'required',
-			'slug' => 'alpha_dash'
+			'slug' => 'alpha_dash|unique:blogs,slug,' . $id
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->fails()) {
