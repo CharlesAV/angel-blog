@@ -28,14 +28,6 @@ Route::group(array('prefix'=>admin_uri('blog'), 'before'=>'admin'), function() {
 		'before' => 'csrf',
 		'uses' => $controller . '@delete'
 	));
-	Route::post('hard-delete/{id}', array(
-		'before' => 'csrf',
-		'uses' => $controller . '@hard_delete'
-	));
-	Route::get('restore/{id}', array(
-		'before' => 'admin',
-		'uses' => $controller . '@restore'
-	));
 });
 
 // Comments

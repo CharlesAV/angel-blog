@@ -32,7 +32,7 @@
 	<h1>{{ ucfirst($action) }} Blog Entry</h1>
 	@if ($action == 'edit')
 		{{ Form::open(array('role'=>'form',
-							'url'=>admin_uri('blog/hard-delete/'.$blog_entry->id),
+							'url'=>admin_uri('blog/delete/'.$blog_entry->id),
 							'class'=>'deleteForm',
 							'data-confirm'=>'Delete this blog entry forever?  This action cannot be undone!')) }}
 			<input type="submit" class="btn btn-sm btn-danger" value="Delete Forever" />
