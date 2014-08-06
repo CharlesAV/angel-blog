@@ -2,10 +2,6 @@
 
 @section('title','Blog')
 
-@section('meta')
-	{{ $Blog->meta_html() }}
-@stop
-
 @section('content')
 	<div class="row">
 		<div class="col-md-9">
