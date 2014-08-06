@@ -4,6 +4,7 @@ use Angel\Core\AdminCrudController;
 use App, Input, View, Validator, Config;
 
 class AdminBlogController extends AdminCrudController {
+
 	protected $Model	= 'Blog';
 	protected $uri		= 'blog';
 	protected $plural	= 'blog_entries';

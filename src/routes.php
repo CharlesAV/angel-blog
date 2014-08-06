@@ -41,5 +41,5 @@ Route::group(array('prefix'=>admin_uri('blog'), 'before'=>'admin'), function() {
 // Comments
 Route::post('blog/comments',array(
 	'before' => 'csrf',
-	'uses' => 'AdminBlogCommentController@store'
+	'uses' => 'AdminBlogCommentController@attempt_add'
 ));
