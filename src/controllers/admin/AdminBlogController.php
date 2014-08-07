@@ -1,7 +1,7 @@
 <?php namespace Angel\Blog;
 
 use Angel\Core\AdminCrudController;
-use App, Input, View, Validator, Config;
+use App, Input, View, Config;
 
 class AdminBlogController extends AdminCrudController {
 
@@ -60,26 +60,23 @@ class AdminBlogController extends AdminCrudController {
 	}
 
 	/**
-	 * Validate all input when adding or editing a blog_entry.
-	 *
-	 * @param array &$custom - This array is initialized by this function.  Its purpose is to
-	 * 							exclude certain columns that require intervention of some kind (such as
-	 * 							checkboxes because they aren't included in input on submission)
-	 * @param int $id - (Optional) ID of blog_entry beind edited
-	 * @return array - An array of error messages to show why validation failed
+	 * @param int $id - The ID of the model when editing, null when adding.
+	 * @return array - Rules for the validator.
 	 */
-	public function validate(&$custom, $id = null)
+	public function validate_rules($id = null)
 	{
-		$errors = array();
-		$rules = array(
+		return array(
 			'name' => 'required',
 			'slug' => 'required|alpha_dash|unique:blogs,slug,' . $id
 		);
-		$validator = Validator::make(Input::all(), $rules);
-		if ($validator->fails()) {
-			$errors = $validator->messages()->toArray();
-		}
+	}
 
+	/**
+	 * @param array &$errors - The array of failed validation errors.
+	 * @return array - A key/value associative array of custom values.
+	 */
+	public function validate_custom($id = null, &$errors)
+	{
 		$published_start = Input::get('published_start');
 		$published_end   = Input::get('published_end');
 		if (Input::get('published_range') && $published_end && strtotime($published_start) >= strtotime($published_end)) {
@@ -90,15 +87,13 @@ class AdminBlogController extends AdminCrudController {
 			$published_start = $published_end = 0;
 		}
 
-		$custom = array(
+		return array(
 			'title'           => Input::get('title') ? Input::get('title') : Input::get('name'),
 			'published'       => Input::get('published') ? 1 : 0,
 			'published_range' => Input::get('published_range') ? 1 : 0,
 			'published_start' => $published_start,
 			'published_end'   => $published_end
 		);
-
-		return $errors;
 	}
 
 }
