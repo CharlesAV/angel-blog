@@ -56,7 +56,7 @@ class AdminBlogController extends AdminCrudController {
 		$this->data['changes'] = $blog_entry->changes();
 		$this->data['action'] = 'edit';
 
-		return View::make($this->package . '::admin.blog.add-or-edit', $this->data);
+		return View::make($this->view('add-or-edit'), $this->data);
 	}
 
 	/**
@@ -77,13 +77,11 @@ class AdminBlogController extends AdminCrudController {
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		if ($validator->fails()) {
-			foreach($validator->messages()->all() as $error) {
-				$errors[] = $error;
-			}
+			$errors = $validator->messages()->toArray();
 		}
 
 		$published_start = Input::get('published_start');
-		$published_end = Input::get('published_end');
+		$published_end   = Input::get('published_end');
 		if (Input::get('published_range') && $published_end && strtotime($published_start) >= strtotime($published_end)) {
 			$errors[] = 'The publication end time must come after the start time.';
 		} else if (!Input::get('published_range')) {
