@@ -95,5 +95,4 @@ class AdminBlogController extends AdminCrudController {
 			'published_end'   => $published_end
 		);
 	}
-
 }

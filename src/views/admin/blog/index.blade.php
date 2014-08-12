@@ -75,4 +75,35 @@
 	<div class="row text-center">
 		{{ $links }}
 	</div>
+	@if (Config::get('core::languages') && !$single_language)
+		<div class="row pad">
+			{{ Form::hidden('all', 0, array('id'=>'all')) }}
+			<button type="button" id="copyChecked" class="btn btn-sm btn-primary">Copy checked...</button>
+			<button type="button" id="copyAll" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#copyModal">Copy all...</button>
+		</div>
+		<div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Copy to...</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<?php
+								$language_drop_minus_active = $language_drop;
+								unset($language_drop_minus_active[$active_language->id]);
+							?>
+							{{ Form::label('language_id', 'Language') }}
+							{{ Form::select('language_id', $language_drop_minus_active, $active_language->id, array('class' => 'form-control')) }}
+						</div>
+						<p class="text-right">
+							{{ Form::submit('Done', array('class'=>'btn btn-primary')) }}
+						</p>
+					</div>{{-- Modal --}}
+				</div>{{-- Modal --}}
+			</div>{{-- Modal --}}
+		</div>{{-- Modal --}}
+	{{ Form::close() }}
+	@endif
 @stop

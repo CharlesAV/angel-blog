@@ -31,13 +31,39 @@ class BlogController extends \Angel\Core\AngelController {
 	public function show($slug)
 	{
 		// Item
-		$blog_entry = $this->Blog->with('comments')->where('slug', $slug)->first();
+		$blog_entry = $this->Blog
+			->with('comments')
+			->where('slug', $slug)
+			->first();
 		if (!$blog_entry || !$blog_entry->is_published()) App::abort(404);
 		$this->data['blog_entry'] = $blog_entry;
 		$this->data['time'] = strtotime($blog_entry->created_at);
 		
 		// Return
 		return View::make('blog::blog.show', $this->data);
+	}
+
+	public function show_language($language_uri = 'en', $slug)
+	{
+		// Language
+		$language = $this->languages->filter(function ($language) use ($language_uri) {
+			return ($language->uri == $language_uri);
+		})->first();
+		if (!$language) App::abort(404);
+
+		//  Item
+		$blog_entry = $this->Blog
+			->with('comments')
+			->where('language_id', $language->id)
+			->where('slug', $slug)
+			->first();
+		if (!$blog_entry || !$blog_entry->is_published()) App::abort(404);
+		$this->data['active_language'] = $language;
+		$this->data['blog_entry'] = $blog_entry;
+		$this->data['time'] = strtotime($blog_entry->created_at);
+
+		// Return
+		return View::make('faqs::faqs.show', $this->data);
 	}
 	
 	function archive($year,$month)
