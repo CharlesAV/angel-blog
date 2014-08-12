@@ -63,7 +63,7 @@ class BlogController extends \Angel\Core\AngelController {
 		$this->data['time'] = strtotime($blog_entry->created_at);
 
 		// Return
-		return View::make('faqs::faqs.show', $this->data);
+		return View::make('blog::blog.show', $this->data);
 	}
 	
 	function archive($year,$month)

@@ -6,5 +6,5 @@
 	@endforeach
 	</ul>
 @else 
-	No blog entries found
+	No Blog Entries Found
 @endif

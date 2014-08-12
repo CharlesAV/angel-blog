@@ -39,9 +39,7 @@
 						@if (Config::get('core::languages') && !$single_language)
 							<th style="width:60px;">Copy</th>
 						@endif
-						<th style="width:80px;">ID</th>
 						<th>Name</th>
-						<th>Title</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -56,9 +54,10 @@
 									<span class="glyphicon glyphicon-eye-open"></span>
 								</a>
 							</td>
-							<td>{{ $blog_entry->id }}</td>
+						@if (Config::get('core::languages') && !$single_language)
+							<td>{{ Form::checkbox('ids[]', $blog_entry->id, false, array('class'=>'idCheckbox')) }}</td>
+						@endif
 							<td>{{ $blog_entry->name }}</td>
-							<td>{{ $blog_entry->title }}</td>
 						</tr>
 					@endforeach
 				@else 

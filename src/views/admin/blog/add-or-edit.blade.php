@@ -35,7 +35,7 @@
 							'url'=>admin_uri('blog/delete/'.$blog_entry->id),
 							'class'=>'deleteForm',
 							'data-confirm'=>'Delete this blog entry forever?  This action cannot be undone!')) }}
-			<input type="submit" class="btn btn-sm btn-danger" value="Delete Forever" />
+			<input type="submit" class="btn btn-sm btn-danger" value="Delete" />
 		{{ Form::close() }}
 	@endif
 

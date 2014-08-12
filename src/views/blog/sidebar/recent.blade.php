@@ -6,5 +6,5 @@
 	@endforeach
 	</ul>
 @else 
-	No recent blog entries
+	No Recent Blog Entries
 @endif
