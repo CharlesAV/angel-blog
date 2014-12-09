@@ -1,4 +1,4 @@
-Angel News
+Angel Blog
 ==============
 This is a blog module for the [Angel CMS](https://github.com/CharlesAV/angel).
 
