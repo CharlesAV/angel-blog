@@ -1,10 +1,66 @@
 <?php namespace Angel\Blog;
 
 use Angel\Core\LinkableModel;
-use App, Config;
+use App, Config, Input;
 
 class Blog extends LinkableModel {
+	public static function columns()
+	{
+		$columns = array(
+			'name',
+			'slug',
+			'html',
+			'title',
+			'meta_description',
+			'meta_keywords',
+			'og_type',
+			'og_image',
+			'twitter_card',
+			'twitter_image',
+			'published',
+			'published_range',
+			'published_start',
+			'published_end'
+		);
+		if (Config::get('core::languages')) $columns[] = 'language_id';
+		return $columns;
+	}
+	public function validate_rules()
+	{
+		return array(
+			'name' => 'required',
+			'slug' => 'required|alpha_dash|unique:blogs,slug,' . $this->id
+		);
+	}
+	public function validate_custom()
+	{
+		$errors = array();
+		
+		$published_start = Input::get('published_start');
+		$published_end   = Input::get('published_end');
+		if (Input::get('published_range') && $published_end && strtotime($published_start) >= strtotime($published_end)) {
+			$errors[] = 'The publication end time must come after the start time.';
+		}
 
+		return $errors;
+	}
+
+	///////////////////////////////////////////////
+	//                  Events                   //
+	///////////////////////////////////////////////
+	public static function boot()
+	{
+		parent::boot();
+
+		static::saving(function($blog_entry) {
+			$blog_entry->plaintext = strip_tags($blog_entry->html);
+			if (!$blog_entry->published_range) {
+				$blog_entry->published_start = $blog_entry->published_end = null;
+			}
+			$blog_entry->title = $blog_entry->title ? $blog_entry->title : $blog_entry->name;
+		});
+	}
+	
 	///////////////////////////////////////////////
 	//               Relationships               //
 	///////////////////////////////////////////////
@@ -48,6 +104,17 @@ class Blog extends LinkableModel {
 	public function link_edit()
 	{
 		return admin_url('blog/edit/' . $this->id);
+	}
+	public function search($terms)
+	{
+		return static::where(function($query) use ($terms) {
+			foreach ($terms as $term) {
+				$query->orWhere('name', 'like', $term);
+				$query->orWhere('plaintext', 'like', $term);
+				$query->orWhere('meta_description', 'like', $term);
+				$query->orWhere('meta_keywords', 'like', $term);
+			}
+		})->get();
 	}
                                    
 	///////////////////////////////////////////////
