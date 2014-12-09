@@ -63,7 +63,8 @@
 				@else 
 					<tr>
 						<td colspan="4" align="center">
-							No Blogs Found.
+							<br />
+							No Blog Entries Found.<br /><br />	
 						</td>
 					</tr>
 				@endif
