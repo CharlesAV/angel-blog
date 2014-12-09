@@ -8,7 +8,7 @@
 			@foreach($blog_entries as $blog_entry) 
 			<div class="blog-item">
 				<h1 class="blog-name"><a href="{{ $blog_entry->link() }}">{{ $blog_entry->name }}</a></h1>
-				<div class="blog-date">Posted {{ date('F j, Y',strtotime($blog_entry->created_at)) }} at {{ date('g:i A',strtotime($blog_entry->created_at)) }}</div>
+				<div class="blog-date">Posted {{ date('F j, Y',strtotime($blog_entry->created_at)) }}</div>
 				<div class="blog-html">
 					{{ $blog_entry->html }}
 				</div>
